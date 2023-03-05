@@ -55,4 +55,3 @@ function yell(name = '') {
     return `HEY ${name.toUpperCase()}`;
 }
 console.log(yell(doctorise('jyp')))
-console.log(yell(doctorise('')))
