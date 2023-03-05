@@ -32,4 +32,27 @@ console.log(`total bill is $${myTotal}`);
 //passing variables/references into functions
 const newTotal = 500;
 const newTaxRate = 0.2;
-console.log(`total bill for the newTotal newTaxRate is $${calculateBillTwo(newTotal, newTaxRate)}`)
+console.log(`total bill for the newTotal newTaxRate is $${calculateBillTwo(newTotal, newTaxRate)}`);
+
+// passing expression into the function
+const myTotalThree = calculateBillTwo(20 + 20, 0.15);
+
+const billOne = 50;
+const billTwo = 100;
+const updatedTaxRate = 0.35;
+const myTotalFour = calculateBillTwo(billOne + billTwo, updatedTaxRate); 
+
+console.log(`bill three is ${myTotalThree}, bill four is ${myTotalFour}`);
+
+
+//passing function as the argument for the function
+
+function doctorise(name) {
+    return `Dr. ${name}`;
+}
+// setting default value of a parameter
+function yell(name = '') {
+    return `HEY ${name.toUpperCase()}`;
+}
+console.log(yell(doctorise('jyp')))
+console.log(yell(doctorise('')))
