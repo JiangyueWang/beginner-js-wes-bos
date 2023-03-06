@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    // Closure is the ability to access parent level scope from a child scope
+    // even when after the parent function has been terminated
+    
+    // function outer() {
+    //     const outerVar = `Hey i am the outer var`;
+        
+    //     function inner() {
+    //         const innerVar = `Hey i am the inner var`;
+    //         console.log(innerVar);
+    //         console.log(outerVar);
+    //     }
+
+    //     return inner;
+    // }
+    
+    // const innerFn = outer();
+    // innerFn();//inner function can still be called after the outer function finished running
+
+    function createGreeting(greeting = '') {
+        const myGreet = greeting.toUpperCase();
+        return function(name) {
+            // inner function references the variable myGreet that was created in the outer function
+            // this is referred to a closure 
+            return `${myGreet} ${name}`;
+        }
+    }
+    
+    const sayHello = createGreeting('hello');
+    const sayHiyo = createGreeting('Hiyo');
+
+    // console.log(sayHello(`James`));
+    // console.log(sayHiyo(`Jane`));
+
+    function createGame(gameName) {
+        let score = 0;
+        let result = '';
+        return function showResults(result) {
+            if (result === 'win') {
+                score++;
+                return `Your game ${gameName} score is ${score}`;
+            } else {
+                if (score !== 0) {
+                    score--;
+                    return `Your game ${gameName} score is ${score}`;
+                } else {
+                    return `Your game ${gameName} score is ${score}`;
+                }
+                
+            }
+        }
+    }
+    const soccerGame = createGame('soccer');
+    console.log(soccerGame('win'));
+    console.log(soccerGame('loose'));
+    </script>
+</body>
+</html>
