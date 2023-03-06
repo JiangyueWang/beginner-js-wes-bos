@@ -16,3 +16,28 @@ const imgesInItem2Div = item2.querySelector('img')
 // getElementByClassName
 
 
+const heading = document.querySelector('h2');
+//console.dir(heading.textContent);
+// innerText only shows human readable element 
+// textContent  returns every elements in the node, including <script> and <style> elements
+
+console.log(heading.textContent);//shows hidden element
+console.log(heading.innerText);// only shows human readable text
+
+console.log(heading.innerHTML);
+console.log(heading.outerHTML);
+
+
+
+// select the element on the page
+const pizzaList = document.querySelector('.pizza');
+console.log(pizzaList.textContent);
+
+// update the content on the page
+
+// slow application method
+// pizzaList.textContent =` ${pizzaList.textContent}🍕`;
+
+// recommened way 
+pizzaList.insertAdjacentText('beforeend', '🍕')
+pizzaList.insertAdjacentText('afterbegin', '🍕')
