@@ -1,6 +1,7 @@
 // hoisting allows you to access functions and variables before they have been defined 
 sayHi();
 
+//function hoisting only works for regular function declaration, not arrow functions
 function sayHi() {
     console.log('hey!');
     console.log(add(10, 2));
