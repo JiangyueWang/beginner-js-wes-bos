@@ -27,3 +27,15 @@ myButton.addEventListener('mouseout', (event) => {
 // unbinding function handleClick to myButton 
 // you have to use a named function in order to use removeEventListener
 //myButton.removeEventListener('click', handleClick)
+
+//listen on multiple items
+const myButtons = document.querySelectorAll('.buy');
+function handleBuyBtnClick(event) {
+    console.log(`you have bought this item ${event.target.textContent}`)
+}
+function attachBuyBtnListener(btn) {
+    btn.addEventListener('click', (e) => handleBuyBtnClick(e));
+}
+myButtons.forEach(attachBuyBtnListener)
+
+// console.log(myButtons)
