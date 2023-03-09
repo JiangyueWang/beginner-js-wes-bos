@@ -10,22 +10,25 @@
 <body>
   <div class="cards">
     <div class="card" data-description="Wes is cool">
-      <img src="https://picsum.photos/200" alt="Wes Bos">
-      <h2>Wes Bos</h2>
-      <button>Learn more →</button>
+
+            <img src="https://picsum.photos/200?random=1" alt="Wes Bos">
+            <h2>Wes Bos</h2>
+            <button>Learn more →</button>
+
+
     </div>
     <div class="card" data-description="Scott is neat!">
-      <img src="https://picsum.photos/200" alt="Wes Bos">
+      <img src="https://picsum.photos/200?random=2" alt="Wes Bos">
       <h2>Scott Tolinski</h2>
       <button>Learn more →</button>
     </div>
     <div class="card" data-description="Kait is beautiful!">
-      <img src="https://picsum.photos/200" alt="Wes Bos">
+      <img src="https://picsum.photos/200?random=3" alt="Wes Bos">
       <h2>Kait Bos</h2>
       <button>Learn more →</button>
     </div>
     <div class="card" data-description="Snickers is a dog!">
-      <img src="https://picsum.photos/200" alt="Wes Bos">
+      <img src="https://picsum.photos/200?random=4" alt="Wes Bos">
       <h2>Snickers the dog</h2>
       <button>Learn more →</button>
     </div>
@@ -34,9 +37,56 @@
 
   <div class="modal-outer">
     <div class="modal-inner">
-
+        <p>inside modal</p>
+        <p>inside modal</p>
+        <p>inside modal</p>
+        <p>inside modal</p>
+  
     </div>
   </div>
+  <style>
+    .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        padding: 2rem;
+        column-gap: 20px;
+
+    }
+    .card {
+        background-color: rgba(153, 158, 196, 0.466);
+        padding: 1rem;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .card img {
+        width: 80%;
+    }
+    .modal-outer {
+        display: grid;
+        background: hsla(50, 100%, 50%, 0.35);
+        position: fixed;
+        height: 100vh;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        justify-content: center;
+        align-items: center;
+        /* hide the modal and ignore any events apply to it */
+        opacity: 0;
+        pointer-events: none;
+    }
+    .modal-inner {
+        max-width: 1000px;
+        min-width: 500px;
+        max-height: 800px;
+        min-height: 300px;
+        background: white;
+        border-radius: 5px;
+    }
+
+  </style>
   <script src="./click-outside.js"></script>
 </body>
 
