@@ -37,11 +37,7 @@
 
   <div class="modal-outer">
     <div class="modal-inner">
-        <p>inside modal</p>
-        <p>inside modal</p>
-        <p>inside modal</p>
-        <p>inside modal</p>
-  
+        <button class="close-modal">x</button>
     </div>
   </div>
   <style>
@@ -76,6 +72,11 @@
         /* hide the modal and ignore any events apply to it */
         opacity: 0;
         pointer-events: none;
+    }
+    .modal-outer.open {
+        /* when the modal opens, it shows above all the element on the page */
+        opacity: 1;
+        pointer-events: all;
     }
     .modal-inner {
         max-width: 1000px;
