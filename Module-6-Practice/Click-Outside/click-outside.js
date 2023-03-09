@@ -9,15 +9,15 @@ function handleCardBtnClick(event) {
     const cardImg = card.querySelector('img').cloneNode(true);
     const cardTitle = card.querySelector('h2').cloneNode(true);
     modalOuter.classList.add('open');
-  // remove previously inserted elements
-  const prevCardImg = modalInner.querySelector('img');
-  const prevCardTitle = modalInner.querySelector('h2');
-  if (prevCardImg) {
-    prevCardImg.remove();
-  }
-  if (prevCardTitle) {
-    prevCardTitle.remove();
-  }
+    // remove previously inserted elements
+    const prevCardImg = modalInner.querySelector('img');
+    const prevCardTitle = modalInner.querySelector('h2');
+    if (prevCardImg) {
+        prevCardImg.remove();
+    }
+    if (prevCardTitle) {
+        prevCardTitle.remove();
+    }
     modalInner.insertAdjacentElement('beforeend', cardImg)
     cardImg.insertAdjacentElement('afterend', cardTitle)
 }
