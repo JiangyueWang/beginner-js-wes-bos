@@ -30,3 +30,14 @@ nameOnForm.addEventListener('focus', function(event) {
 // blur
 // keydown
 // keyup
+
+// example of using tab to click on the photo
+const photo = document.querySelector('.photo');
+function handlePhotoClick(event) {
+    if(event.type === 'click' || event.key === 'Enter') {
+      console.log(`you clicked the photo`);  
+    }
+    
+}
+photo.addEventListener('click', handlePhotoClick);
+photo.addEventListener('keyup', handlePhotoClick);
