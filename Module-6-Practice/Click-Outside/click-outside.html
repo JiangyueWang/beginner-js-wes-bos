@@ -36,8 +36,10 @@
   </div>
 
   <div class="modal-outer">
-    <div class="modal-inner">
-        <button class="close-modal">x</button>
+    <div>
+      <div class="close-modal"><button class="close-modal-btn">x</button></div>  
+        <div class="modal-inner modal-inner-flex">
+        </div>
     </div>
   </div>
   <style>
@@ -78,6 +80,9 @@
         opacity: 1;
         pointer-events: all;
     }
+    .close-modal {
+      background: white;
+    }
     .modal-inner {
         max-width: 1000px;
         min-width: 500px;
@@ -85,6 +90,13 @@
         min-height: 300px;
         background: white;
         border-radius: 5px;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .modal-inner img {
+      width: 95%;
     }
 
   </style>
