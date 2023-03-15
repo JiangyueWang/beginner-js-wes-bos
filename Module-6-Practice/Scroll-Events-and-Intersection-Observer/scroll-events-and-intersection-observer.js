@@ -8,6 +8,7 @@ function obCallback(payload) {
     if(payload[0].intersectionRatio === 1){
         acceptBtn.disabled = false; 
         acceptBtn.opacity = 1;
+        // ob.unobserve(terms.lastElementChild);//stop observe the element
     } else {
         acceptBtn.disabled = true;
     }
