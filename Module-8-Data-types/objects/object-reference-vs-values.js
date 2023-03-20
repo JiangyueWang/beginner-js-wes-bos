@@ -71,4 +71,20 @@ classObj2.students.student1.name = 'ya-ya',
 console.log(classObj2.students.student1.name);//ya-ya
 console.log(classObj.students.student1.name);//choc
 
+// use spread operator to merge objects 
+const meatInventory = {
+    bacon: 10,
+    sausage: 2,
+    oyster: 1,
+}
+const veggieInventory = {
+    letture: 9,
+    tomatos: 4,
+    oyster: 1000,// this value will replace the oyster value from meatInventory
+}
+const totalInventory = {
+    ...meatInventory,
+    ...veggieInventory
+}
+console.log(totalInventory)
 
