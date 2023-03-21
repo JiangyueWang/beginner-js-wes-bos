@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maps</title>
+</head>
+<body>
+
+    <ul class="prizes"></ul>
+    <script>
+        const person = {
+            name: 'ly',
+            age: 38,
+        }
+        const myMap = new Map(); 
+        // .set()
+        myMap.set('name', 'jo'); 
+        myMap.set(100, 'this is a number'); // the keys of the map can be any type
+        myMap.set(person, 'really cool');
+        
+        console.log(myMap);
+        console.log(myMap.get(person));//really cool
+        console.log(person.age);//38 
+
+        const score = 100;
+        const prizes = new Map(); 
+        // what the the prizes are for what score
+        prizes.set(100, 'Bear');
+        prizes.set(200, 'Duck'); 
+        prizes.set(500, 'Car');
+        console.log(`you win a ${prizes.get(score)}`);
+
+        // check the size of a Map 
+        console.log(myMap.size);
+        // order of the map is guaranted, this is different to the object
+        const prizesElement = document.querySelector('.prizes');
+        for (const [points, prize] of prizes) { 
+            //console.log(`you points are ${points} and you prize is ${prize}`)
+            const li = `<li>${points}-${prize}</li>`;
+            prizesElement.insertAdjacentHTML('beforeend', li)
+        }
+        // you cannot put functions as methods into Maps, only Objects can
+        // .has()
+        // .delete() 
+        myMap.delete(person);
+        console.log(myMap); 
+        // convert object into string: .stringfy() 
+        // convert string into object: .parse()
+
+
+    </script>
+</body>
+</html>
