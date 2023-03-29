@@ -98,40 +98,123 @@ const foodString = "hot dogs, hamburgers, sausages, corn";
 //.unshift()
 // take the first item off toppings with shift()
 const firstItem = toppings.shift();
-console.log(firstItem);
+// console.log(firstItem);
 // add it back in with unshift()
 toppings.unshift(firstItem);
 // Do the last four,but immutable (with spreads and new variables)
 let newToppings = toppings.slice(0, toppings.length - 1);
-console.log(toppings);//['Mushrooms ', 'Tomatoes', 'Eggs', 'Chili', 'Lettuce', 'Avocado', 'Chiles', 'Bacon', 'Pickles', 'Onions', 'Cheese']
-console.log(newToppings);//['Mushrooms ', 'Tomatoes', 'Eggs', 'Chili', 'Lettuce', 'Avocado', 'Chiles', 'Bacon', 'Pickles', 'Onions']
-newtoppings = [...newToppings, toppings[toppings.length - 1]];//put the last item from the original toppings into newToppings
-console.log(newtoppings);//['Mushrooms ', 'Tomatoes', 'Eggs', 'Chili', 'Lettuce', 'Avocado', 'Chiles', 'Bacon', 'Pickles', 'Onions', 'Cheese']
+// console.log(toppings);//['Mushrooms ', 'Tomatoes', 'Eggs', 'Chili', 'Lettuce', 'Avocado', 'Chiles', 'Bacon', 'Pickles', 'Onions', 'Cheese']
+// console.log(newToppings);//['Mushrooms ', 'Tomatoes', 'Eggs', 'Chili', 'Lettuce', 'Avocado', 'Chiles', 'Bacon', 'Pickles', 'Onions']
+// newtoppings = [...newToppings, toppings[toppings.length - 1]];//put the last item from the original toppings into newToppings
+// console.log(newtoppings);//['Mushrooms ', 'Tomatoes', 'Eggs', 'Chili', 'Lettuce', 'Avocado', 'Chiles', 'Bacon', 'Pickles', 'Onions', 'Cheese']
 
 
-// Make a copy of the toppings array with slice()
-const toppingsCopy = toppings.slice(0);
-toppings[0] = 'Mushy Boi';
-console.log(toppings);
-console.log(toppingsCopy);
-// Make a copy of the toppings array with a spread
-const toppingsCopy2 = [...toppings];
-// take out items 3 to 5 of your new toppings array with splice()
-toppingsCopy.splice(3, 3);
-console.log(toppingsCopy);
-// find the index of Avocado with indexOf() / lastIndexOf()
-const avoIndex = toppings.indexOf('Avocado');
-console.log(avoIndex);
+// // Make a copy of the toppings array with slice()
+// const toppingsCopy = toppings.slice(0);
+// toppings[0] = 'Mushy Boi';
+// console.log(toppings);
+// console.log(toppingsCopy);
+// // Make a copy of the toppings array with a spread
+// const toppingsCopy2 = [...toppings];
+// // take out items 3 to 5 of your new toppings array with splice()
+// toppingsCopy.splice(3, 3);
+// console.log(toppingsCopy);
+// // find the index of Avocado with indexOf() / lastIndexOf()
+// const avoIndex = toppings.indexOf('Avocado');
+// console.log(avoIndex);
 
-// Check if hot sauce is in the toppings with includes()
-const isInToppings = toppings.includes('Hot Sauce');
-console.log(isInToppings);
-// add it if it's not
-if (!isInToppings) {
-  toppings.push('Hot Sauce');
+// // Check if hot sauce is in the toppings with includes()
+// const isInToppings = toppings.includes('Hot Sauce');
+// console.log(isInToppings);
+// // add it if it's not
+// if (!isInToppings) {
+//   toppings.push('Hot Sauce');
+// }
+// console.log(toppings);
+// // flip those toppings around with reverse()
+// // toppings.reverse();
+// const toppingsReversed = [...toppings].reverse();
+// console.log(toppingsReversed);
+
+
+/*
+  Callback Methods, mthods that takes a function as an argument, called callback
+*/
+
+// find the first rating that talks about a burger with find()
+function findBurgRating(singleFeedback) {
+  // console.log(singleFeedback)
+  // return true;//whenever this function returns true, the item will be printed out
+  if(singleFeedback.comment.includes('burg')) {
+    return true;
+  } else {
+    return false;
+  }
 }
-console.log(toppings);
-// flip those toppings around with reverse()
-// toppings.reverse();
-const toppingsReversed = [...toppings].reverse();
-console.log(toppingsReversed);
+// you can also use arrow function with implicit return for findBurgRating
+
+
+function FindItemByWord(word) {
+  return function(singleFeedback) {
+    return singleFeedback.comment.includes(word)
+  }
+}
+const burgFinder = FindItemByWord('burg');
+const burgRating = feedback.find(burgFinder);
+
+
+// find all ratings that are above 2 with filter()
+// function filterByMinRating(minRating) {
+//   return function(singleFeedback) {
+//     return singleFeedback.rating > minRating;
+//   }
+// }
+const ratingAbove2 = feedback.filter(singleFeedback => {
+  return singleFeedback.rating >= 2;
+})
+console.log(ratingAbove2);
+// find all ratings that talk about a burger with filter()
+const burgsCommentFinder = feedback.filter((singleFeedback) => singleFeedback.comment.includes('burg'))
+console.log(burgsCommentFinder);
+
+
+// Remove the one star rating however you like!
+let ratingAboveOne=[];
+feedback.filter(singleFeedback => {
+  if(singleFeedback.rating > 1) {
+    ratingAboveOne.push(singleFeedback);
+  } 
+})
+console.log(ratingAboveOne);
+const ratingAboveOne2 = feedback.filter(single => single.rating !== 1);
+console.table(ratingAboveOne2) 
+
+// check if there is at least 5 of one type of meat with some()
+const isThereEnoughOfAtLeastOneMeat = Object.values(meats).some(meatValue => meatValue >= 5);
+// make sure we have at least 3 of every meat with every()
+const isThereEnoughOfEveryMeat = Object.values(meats).every(meatValue => meatValue >= 3);
+// sort the toppings alphabetically with sort()
+const numbers = [1, 2, 100, 20, 300, 200, 156, 2];
+const sortedNumbers = numbers.sort((num1, num2) => {
+  return num1 - num2;
+  // if(num1 === num2) {
+  //   return 0;
+  // } else if(num1 < num2){
+  //   return -1;
+  // } else {
+  //   return 1;
+  // }
+})
+console.log(sortedNumbers)
+// sort the order totals from most expensive to least with .sort()
+function numSort(a, b) {
+  return a-b;
+}
+console.log(orderTotals.sort(numSort));
+// Sort the prices with sort()
+const productsSortedByPrice = Object.entries(prices).sort(
+  function(a,b) {
+    return a[1] - b[1];
+  }
+);
+console.table(Object.fromEntries(productsSortedByPrice));
