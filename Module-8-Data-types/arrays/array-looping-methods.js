@@ -148,8 +148,32 @@ const cleanPeople = people.map(function (person) {
     const now = new Date().getFullYear();
     newObj.name = `${person.names.first} ${person.names.last}`;
     newObj.age = now - bday;
-    console.log(newObj)
+    // console.log(newObj)
     return newObj;
     // return their full name and bday in an object
 });
 
+
+// filter(), always return to all the items that match the criteria
+// find people who age is over 40
+const pplOver40 = cleanPeople.filter(people =>  people.age > 40 );
+pplOver40 ? console.log(`there are people over 40 ${JSON.stringify(pplOver40)}`) : console.log(`there are no people over 40`);
+
+// find(), return the 1st item in the array that match the criteria
+// find the student with the id
+function findStudentById(id) {
+    return function(stud) {
+        return stud.id === id;
+    }
+}
+const student = students.find(findStudentById("565a"));
+console.log(student)
+
+function findStudentByProp(prop, value) {
+    return function(student) {
+        return student[prop]=== value;
+    }
+}
+
+const studentByProp = students.find(findStudentByProp('first_name', 'Margarete'));
+console.log(studentByProp)
