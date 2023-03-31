@@ -88,7 +88,7 @@ const students = [
     corn: 234,
   };
 
-  const orderTotals = [342, 1002, 523, 34, 634, 854, 1644, 2222];
+
 
   const feedback = [
     { comment: 'Love the burgs', rating: 4 },
@@ -100,15 +100,6 @@ const students = [
 
   const faces = ['😃', '🤠', '🤡', '🤑', '😵', '🌞', '🐶', '😺'];
 
-  const inventory = [
-    { type: 'shirt', price: 4000 },
-    { type: 'pants', price: 4532 },
-    { type: 'socks', price: 234 },
-    { type: 'shirt', price: 2343 },
-    { type: 'pants', price: 2343 },
-    { type: 'socks', price: 542 },
-    { type: 'pants', price: 123 },
-  ];
 
 
 // forEach()
@@ -157,7 +148,7 @@ const cleanPeople = people.map(function (person) {
 // filter(), always return to all the items that match the criteria
 // find people who age is over 40
 const pplOver40 = cleanPeople.filter(people =>  people.age > 40 );
-pplOver40 ? console.log(`there are people over 40 ${JSON.stringify(pplOver40)}`) : console.log(`there are no people over 40`);
+// pplOver40 ? console.log(`there are people over 40 ${JSON.stringify(pplOver40)}`) : console.log(`there are no people over 40`);
 
 // find(), return the 1st item in the array that match the criteria
 // find the student with the id
@@ -167,7 +158,7 @@ function findStudentById(id) {
     }
 }
 const student = students.find(findStudentById("565a"));
-console.log(student)
+// console.log(student)
 
 function findStudentByProp(prop, value) {
     return function(student) {
@@ -176,4 +167,37 @@ function findStudentByProp(prop, value) {
 }
 
 const studentByProp = students.find(findStudentByProp('first_name', 'Margarete'));
-console.log(studentByProp)
+// console.log(studentByProp)
+
+
+// reduce
+const orderTotals = [342, 1002, 523, 34, 634, 854, 1644, 2222];
+function tallyNums(accumulator, currentValue) {
+    // accumulator is the thing has returned from last instance
+    console.log(accumulator, currentValue);
+    console.log(`------------`);
+ 
+    return accumulator+currentValue;
+
+}
+const allOrders = orderTotals.reduce(tallyNums, 0);// the second argument is what do you want the accumulator to start with
+console.log(allOrders);
+
+
+const inventory = [
+    { type: 'shirt', price: 4000 },
+    { type: 'pants', price: 4532 },
+    { type: 'socks', price: 234 },
+    { type: 'shirt', price: 2343 },
+    { type: 'pants', price: 2343 },
+    { type: 'socks', price: 542 },
+    { type: 'pants', price: 123 },
+  ];
+
+function inventoryReducer (totals, item) {
+    console.log(`looping over ${item.type}`);
+    totals[item.type] ? totals[item.type] ++ : totals[item.type] = 1;
+    return totals
+}
+const typeOfInventoryCount = inventory.reduce(inventoryReducer, {});
+console.log(typeOfInventoryCount)
