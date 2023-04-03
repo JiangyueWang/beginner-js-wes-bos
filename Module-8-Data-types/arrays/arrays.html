@@ -10,5 +10,137 @@
     <!-- <script src="./arrays.js"></script> -->
     <!-- <script src="./array-cardio.js"></script> -->
     <script src="./array-looping-methods.js"></script>
+    <script>
+        // grab all the text from a web page
+        const text = `1 Introduction
+WebGL™ is an immediate mode 3D rendering API designed for the web. It is derived from OpenGL® ES 2.0, and provides similar rendering functionality, but in an HTML context. WebGL is designed as a rendering context for the HTML Canvas element. The HTML Canvas provides a destination for programmatic rendering in web pages, and allows for performing that rendering using different rendering APIs. The only such interface described as part of the Canvas specification is the 2D canvas rendering context, CanvasRenderingContext2D. This document describes another such interface, WebGLRenderingContext, which presents the WebGL API.
+
+The immediate mode nature of the API is a divergence from most web APIs. Given the many use cases of 3D graphics, WebGL chooses the approach of providing flexible primitives that can be applied to any use case. Libraries can provide an API on top of WebGL that is more tailored to specific areas, thus adding a convenience layer to WebGL that can accelerate and simplify development. However, because of its OpenGL ES 2.0 heritage, it should be straightforward for developers familiar with modern desktop OpenGL or OpenGL ES 2.0 development to transition to WebGL development.
+
+1.1 Conventions
+Many functions described in this document contain links to OpenGL ES man pages. While every effort is made to make these pages match the OpenGL ES 2.0 specification [GLES20], they may contain errors. In the case of a contradiction, the OpenGL ES 2.0 specification is the final authority.
+
+The remaining sections of this document are intended to be read in conjunction with the OpenGL ES 2.0 specification (2.0.25 at the time of this writing, available from the Khronos OpenGL ES API Registry). Unless otherwise specified, the behavior of each method is defined by the OpenGL ES 2.0 specification. This specification may diverge from OpenGL ES 2.0 in order to ensure interoperability or security, often defining areas that OpenGL ES 2.0 leaves implementation-defined. These differences are summarized in the Differences Between WebGL and OpenGL ES 2.0 section.
+
+2 Context Creation and Drawing Buffer Presentation
+Before using the WebGL API, the author must obtain a WebGLRenderingContext object for a given HTMLCanvasElement [CANVAS] or OffscreenCanvas [OFFSCREENCANVAS] as described below. This object is used to manage OpenGL state and render to the drawing buffer, which must be created at the time of context creation.
+
+2.1 Context Creation
+Each WebGLRenderingContext has an associated canvas, set upon creation, which is a canvas [CANVAS] or offscreen canvas [OFFSCREENCANVAS].
+
+Each WebGLRenderingContext has context creation parameters, set upon creation, in a WebGLContextAttributes object.
+
+Each WebGLRenderingContext has actual context parameters, set each time the drawing buffer is created, in a WebGLContextAttributes object.
+
+Each WebGLRenderingContext has a webgl context lost flag, which is initially unset.
+
+When the getContext() method of a canvas element or offscreen canvas object is to return a new object for the contextId webgl [CANVASCONTEXTS], the user agent must perform the following steps:
+
+ Create a new WebGLRenderingContext object, context.
+ Let context's canvas be the canvas or offscreen canvas the getContext() method is associated with.
+ Create a new WebGLContextAttributes object, contextAttributes.
+ If getContext() was invoked with a second argument, options, set the attributes of contextAttributes from those specified in options.
+ Create a drawing buffer using the settings specified in contextAttributes, and associate the drawing buffer with context.
+ If drawing buffer creation failed, perform the following steps:
+ Fire a WebGL context creation error at canvas.
+ Return null and terminate these steps.
+ Create a new WebGLContextAttributes object, actualAttributes.
+ Set the attributes of actualAttributes based on the properties of the newly created drawing buffer.
+ Set context's context creation parameters to contextAttributes.
+ Set context's actual context parameters to actualAttributes.
+ Return context.
+The canvas context type 'experimental-webgl' has historically been used to provide access to WebGL implementations which are not yet complete or conformant.
+
+If the user agent supports both the webgl and experimental-webgl canvas context types, they shall be treated as aliases. For example, if a call to getContext('webgl') successfully creates a WebGLRenderingContext, a subsequent call to getContext('experimental-webgl') shall return the same context object.
+
+2.2 The Drawing Buffer
+The drawing buffer into which the API calls are rendered shall be defined upon creation of the WebGLRenderingContext object. The following description defines how to create a drawing buffer.
+
+The table below shows all the buffers which make up the drawing buffer, along with their minimum sizes and whether they are defined or not by default. The size of this drawing buffer shall be determined by the width and height attributes of the HTMLCanvasElement or OffscreenCanvas. The table below also shows the value to which these buffers shall be cleared when first created, when the size is changed, or after presentation when the preserveDrawingBuffer context creation attribute is false.
+
+Buffer	Clear value	Minimum size	Defined by default?
+Color	(0, 0, 0, 0)	8 bits per component	yes
+Depth	1.0	16 bit integer	yes
+Stencil	0	8 bits	no
+
+HTMLCanvasElement.width and .height values less than 1 are treated as 1. A 0x0 canvas will yield a 1x1 drawingBufferWidth/Height.
+
+If the requested width or height cannot be satisfied, either when the drawing buffer is first created or when the width and height attributes of the HTMLCanvasElement or OffscreenCanvas are changed, a drawing buffer with smaller dimensions shall be created. The dimensions actually used are implementation dependent and there is no guarantee that a buffer with the same aspect ratio will be created. The actual drawing buffer size can be obtained from the drawingBufferWidth and drawingBufferHeight attributes.
+
+A WebGL implementation must not perform any automatic scaling of the size of the drawing buffer on high-definition displays. The context's drawingBufferWidth and drawingBufferHeight must match the canvas's width and height attributes as closely as possible, modulo implementation-dependent constraints.
+
+The constraint above does not change the amount of space the canvas element consumes on the web page, even on a high-definition display. The canvas's intrinsic dimensions [CANVAS] equal the size of its coordinate space, with the numbers interpreted in CSS pixels, and CSS pixels are resolution-independent [CSS].
+
+A WebGL application can achieve a 1:1 ratio between drawing buffer pixels and on-screen pixels on high-definition displays by examining properties like window.devicePixelRatio, scaling the canvas's width and height by that factor, and setting its CSS width and height to the original width and height. An application can simulate the effect of running on a higher-resolution display simply by scaling up the canvas's width and height properties.
+
+The optional WebGLContextAttributes object may be used to change whether or not the buffers are defined. It can also be used to define whether the color buffer will include an alpha channel. If defined, the alpha channel is used by the HTML compositor to combine the color buffer with the rest of the page. The WebGLContextAttributes object is only used on the first call to getContext. No facility is provided to change the attributes of the drawing buffer after its creation.
+
+The depth, stencil and antialias attributes, when set to true, are requests, not requirements. The WebGL implementation should make a best effort to honor them. When any of these attributes is set to false, however, the WebGL implementation must not provide the associated functionality. Combinations of attributes not supported by the WebGL implementation or graphics hardware shall not cause a failure to create a WebGLRenderingContext. The actual context parameters are set to the attributes of the created drawing buffer. The alpha, premultipliedAlpha and preserveDrawingBuffer attributes must be obeyed by the WebGL implementation.
+
+WebGL presents its drawing buffer to the HTML page compositor immediately before a compositing operation, but only if at least one of the following have been called since the previous compositing operation:
+
+Context creation
+Canvas resize
+Any of the [Draw Operations], called while the drawing buffer is the currently bound (draw) framebuffer.
+Before the drawing buffer is presented for compositing the implementation shall ensure that all rendering operations have been flushed to the drawing buffer. By default, after compositing the contents of the drawing buffer shall be cleared to their default values, as shown in the table above.
+
+This default behavior can be changed by setting the preserveDrawingBuffer attribute of the WebGLContextAttributes object. If this flag is true, the contents of the drawing buffer shall be preserved until the author either clears or overwrites them. If this flag is false, attempting to perform operations using this context as a source image after the rendering function has returned can lead to undefined behavior. This includes readPixels or toDataURL calls, using this context as the source image of another context's texImage2D or drawImage call, or creating an ImageBitmap [HTML] from this context's canvas.
+
+While it is sometimes desirable to preserve the drawing buffer, it can cause significant performance loss on some platforms. Whenever possible this flag should remain false and other techniques used. Techniques like synchronous drawing buffer access (e.g., calling readPixels or toDataURL in the same function that renders to the drawing buffer) can be used to get the contents of the drawing buffer. If the author needs to render to the same drawing buffer over a series of calls, a Framebuffer Object can be used.
+
+Implementations may optimize away the required implicit clear operation of the Drawing Buffer as long as a guarantee can be made that the author cannot gain access to buffer contents from another process. For instance, if the author performs an explicit clear then the implicit clear is not needed.
+
+2.3 The WebGL Viewport
+OpenGL manages a rectangular viewport as part of its state which defines the placement of the rendering results in the drawing buffer. Upon creation of WebGL context context, the viewport is initialized to a rectangle with origin at (0, 0) and width and height equal to (context.drawingBufferWidth, context.drawingBufferHeight).
+
+A WebGL implementation shall not affect the state of the OpenGL viewport in response to resizing of the canvas element.
+
+Note that if a WebGL program does not contain logic to set the viewport, it will not properly handle the case where the canvas is resized. The following ECMAScript example illustrates how a WebGL program might resize the canvas programmatically.
+var canvas = document.getElementById('canvas1');
+var gl = canvas.getContext('webgl');
+canvas.width = newWidth;
+canvas.height = newHeight;
+gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
+        
+Rationale: automatically setting the viewport will interfere with applications that set it manually. Applications are expected to use onresize handlers to respond to changes in size of the canvas and set the OpenGL viewport in turn.
+
+2.4 Premultiplied Alpha, Canvas APIs and texImage2D
+The OpenGL API allows the application to modify the blending modes used during rendering, and for this reason allows control over how alpha values in the drawing buffer are interpreted; see the premultipliedAlpha parameter in the WebGLContextAttributes section.
+
+The HTML Canvas APIs toDataURL and drawImage must respect the premultipliedAlpha context creation parameter. When toDataURL is called against a Canvas into which WebGL content is being rendered, then if the requested image format does not specify premultiplied alpha and the WebGL context has the premultipliedAlpha parameter set to true, then the pixel values must be de-multiplied; i.e., the color channels are divided by the alpha channel. Note that this operation is lossy.
+
+Passing a WebGL-rendered Canvas to the drawImage method of CanvasRenderingContext2D may or may not need to modify the the rendered WebGL content during the drawing operation, depending on the premultiplication needs of the CanvasRenderingContext2D implementation.
+
+When passing a WebGL-rendered Canvas to the texImage2D API, then depending on the setting of the premultipliedAlpha context creation parameter of the passed canvas and the UNPACK_PREMULTIPLY_ALPHA_WEBGL pixel store parameter of the destination WebGL context, the pixel data may need to be changed to or from premultiplied form.`;
+// convert text into array
+function isValidChar(char) {
+    // if the character is a-zA-Z0-9, then keep it
+    return char.match(/[a-zA-Z0-9]/);
+}
+
+function lowerCase(char) {
+    return char.toLowerCase();
+}
+
+function charReducer(counts, currentChar) {
+    counts[currentChar] ? counts[currentChar]++ : counts[currentChar] = 1;
+    return counts;
+}
+const filteredTextArray = text
+                            .split("") // split each char into an item of an array
+                            .filter(isValidChar)
+                            .map(lowerCase) // convert everything to lowercase
+                            .reduce(charReducer, {});
+function filteredCharReducer(acc, [key, value]) {
+    acc[key] = value;
+    return acc;
+}
+const filteredTextArrayEntries = Object
+                                    .entries(filteredTextArray)
+                                    .sort((a,b) => a[1] - b[1]) // find out which char occurs the most time
+                                    .reduce(filteredCharReducer,{}); // convert array back to object
+console.log(filteredTextArrayEntries)
+
+    </script>
 </body>
 </html>
