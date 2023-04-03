@@ -52,8 +52,10 @@ function transformText(text) {
     
     // take the text, and loop over each letter
     const mod = Array.from(text).map(filters[filterValue]);
-    console.log(mod)
-     result.textContent = mod.join("");
+    result.textContent = mod.join("");
  }
- 
-textArea.addEventListener('input', e => transformText(e.target.value))
+
+filterInputs.forEach((input) => {
+    input.addEventListener('input', () => {transformText(textArea.value)})
+});
+textArea.addEventListener('input', e => transformText(e.target.value));
