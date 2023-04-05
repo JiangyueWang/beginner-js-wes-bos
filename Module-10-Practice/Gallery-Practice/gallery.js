@@ -49,7 +49,7 @@ function Gallery(gallery) {
     function handleKeyUp(event) {
         if(event.key === 'Escape') return closeModal();
         if (event.key === 'ArrowRight') return showNextImg();
-        if (event.key === 'ArrowLeft') return showPrevImg();
+        if (event.key === 'ArrowLeft') return showPrevImg();        
     }
 
     function showImg(el) {
@@ -79,6 +79,13 @@ function Gallery(gallery) {
     // there are event listeners
     images.forEach(img => {
         img.addEventListener('click', (e) => showImg(e.target));
+        img.addEventListener('keyup', (e) => {
+            // when that is keyup'd, check if it was enter
+            if (e.key === 'Enter') {
+            // if it was, show that image
+                showImg(e.target);
+      }
+        })
     })
     modal.addEventListener('click', handleClickOutside);
 
