@@ -3,7 +3,7 @@ const modal = document.querySelector('.modal');
 const prevBtn = modal.querySelector('.prev');
 const nextBtn = modal.querySelector('.next');
 const modalImg = modal.querySelector('img');
-
+let currentImg;
 
 function Gallery(gallery) {
     if(!gallery) {
@@ -19,6 +19,30 @@ function Gallery(gallery) {
         }
         modal.classList.add('open');
       }
+
+    function closeModal() {
+        modal.classList.remove('open');
+    }
+
+    function handleClickOutside(e) {
+        // console.log(e.target);// the actual element you clicked
+        // console.log(e.currentTarget);//the element that fires up the eventListener
+        /**method 1 */
+        if(e.target === e.currentTarget) {
+            closeModal();
+        }
+        /**method 2 */
+        //uses the "closest" method to determine if the event target element has an ancestor element with a class of "modal-inner"
+        // const isOutside = !e.target.closest(".modalInner");
+        // if (isOutside) {
+        //     closeModal();
+        // }
+    }
+    
+    function handleKeyUp(event) {
+        if(event.key === 'Escape') closeModal();
+    }
+
     function showImg(el) {
         if(!el) {
             console.info('no image to show');
@@ -26,22 +50,24 @@ function Gallery(gallery) {
         }
 
         // updated modal with cliked image information
-        console.log(el);
+        // console.log(el);
         
         modalImg.src = el.src;
         modal.querySelector('h2').textContent = el.title;
         modal.querySelector('figure p').textContent = el.dataset.description;
-
+        currentImg = el;
         openModal();
 
     }
 
     // select images from gallery 
     const images = Array.from(gallery.querySelectorAll('img'));
+    // there are event listeners
     images.forEach(img => {
         img.addEventListener('click', (e) => showImg(e.target));
     })
-
+    modal.addEventListener('click', handleClickOutside);
+    window.addEventListener('keyup', handleKeyUp)
     
 }
 
