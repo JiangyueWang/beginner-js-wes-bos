@@ -6,7 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>new, this, prototypes and classes</title>
 </head>
+<style>
+    button {
+        display: inline;
+        margin: 2rem 0;
+    }
+</style>
 <body>
+    <div><button class="one" data--description="this is button one">button one</button>
+    </div>
+    <div><button class="two" data--description="this is button two">button two</button>
+    </div>
+
     <script>   
         // myDate variable is an instance of Date 
         const myDate = new Date('August 11, 2025');
@@ -42,6 +53,40 @@
         
         Essentially, the "new" keyword is used to create an instance of a class, which is a blueprint for creating objects with specific characteristics and behavior.
         */
+
+
+        /* this keyword in JS refers to the instance of an object, that the function is bound*/
+        const button1 = document.querySelector('.one');
+        const button2 = document.querySelector('.two');
+        function tellmeAboutTheButton() {
+            // this keyword is always scoped to a function
+            console.log(this);
+            setTimeout(() => {
+                console.log(this);
+                this.textContent = `you clicked me`;
+            }, 1000);
+        }
+        
+        button1.addEventListener('click', tellmeAboutTheButton);//tellmeAboutTheButton function is bound to the button1, so this keyword equals to whatever the it gets bound to, which is the button1
+        button2.addEventListener('click', tellmeAboutTheButton);
+
+        // this refers to the instance of the things that was made
+        
+        console.log(`---------------------this keyword examples--------------`)
+        
+        function Pizza2(toppings = [], customer) {
+            // the function that makes an obj is called constructor
+            this.toppings = toppings; // save the toppings were passed in, to this instance of pizza
+            this.customer = customer;
+            this.id = Math.floor(Math.random() * 16777215).toString(16);// generate a random id to the customer 
+        }
+
+        const pepperoniPizza2 = new Pizza2(['pepperoni', 'Wes']);
+        const canadianPizza = new Pizza2(['pepperoni', 'mushroom', 'onion'], 'kou');
+        console.log(pepperoniPizza2.toppings)
+        console.log(canadianPizza.toppings)
+        print()
+
     </script>
 </body>
 </html>
