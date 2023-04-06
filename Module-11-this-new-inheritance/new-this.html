@@ -11,13 +11,55 @@
         display: inline;
         margin: 2rem 0;
     }
+    .modal {
+        position: fixed;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 2;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.5s;
+
+    }
+    .modal.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+  
+    .modal-inner{
+        border-radius: 4px;
+        background: white;
+        box-shadow: 0 0 10px 10px rgba(0, 0, 0, 0.05);
+        height: 400px;
+        width: 400px;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        pointer-events: none;
+    }
 </style>
 <body>
-    <div><button class="one" data--description="this is button one">button one</button>
+    <div><button class="one" data-description="this is button one">button one</button>
     </div>
-    <div><button class="two" data--description="this is button two">button two</button>
+    <div><button class="two" data-description="this is button two">button two</button>
     </div>
-
+    <div><button class="three" data-description="description">click me to open modal</button>
+    </div>
+    <div class="modal">
+        <div>
+            <div class="modal-inner">
+                <h2>title</h2>
+                <p>Description</p>
+                <button>close</button>
+            </div>
+        </div>
+    </div>
     <script>   
         // myDate variable is an instance of Date 
         const myDate = new Date('August 11, 2025');
@@ -66,6 +108,47 @@
                 this.textContent = `you clicked me`;
             }, 1000);
         }
+
+        // click button to open modal practice revisit 
+        // select all the elements
+        const modal = document.querySelector('.modal');
+        const modalInner = modal.querySelector('.modal-inner');
+        const button3 = document.querySelector('.three');
+
+        function openModal() {
+            modal.classList.add('open');
+        }
+        function updateModalInfo(event) {
+            //select elements that need to updated with selected info
+            const modaleTitle = modal.querySelector('h2');
+            const modaleDescription = modal.querySelector('p');
+            // updated textContent of the elements on modal
+            modaleDescription.textContent = event.dataset.description;
+            modaleTitle.textContent = `modal opened`;
+        }
+
+        function closeModal() {
+            modal.classList.remove('open')
+        };
+       
+        function handleClickOutside(e) {
+            console.log(`e.target`);
+            console.log(e.target);
+            console.log(`e.currentTarget`);
+            console.log(e.currentTarget);
+            if(e.target === e.currentTarget) {
+            closeModal();
+        }
+        }
+
+        function handleButtonClick (event) {
+        // update information on modal
+        updateModalInfo(event.target);
+        // open modal
+        openModal();
+        } 
+        modal.addEventListener('click', handleClickOutside);
+        button3.addEventListener('click', handleButtonClick);
         
         button1.addEventListener('click', tellmeAboutTheButton);//tellmeAboutTheButton function is bound to the button1, so this keyword equals to whatever the it gets bound to, which is the button1
         button2.addEventListener('click', tellmeAboutTheButton);
@@ -85,7 +168,6 @@
         const canadianPizza = new Pizza2(['pepperoni', 'mushroom', 'onion'], 'kou');
         console.log(pepperoniPizza2.toppings)
         console.log(canadianPizza.toppings)
-        print()
 
     </script>
 </body>
