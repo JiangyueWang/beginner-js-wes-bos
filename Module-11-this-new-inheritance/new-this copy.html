@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>new, this, prototypes and classes</title>
+</head>
+<style>
+</style>
+<body>
+    <div><button class="one" data-description="this is button one">button one</button>
+    </div>
+    <div><button class="two" data-description="this is button two">button two</button>
+    </div>
+
+
+    <script>   
+        // myDate variable is an instance of Date 
+        const myDate = new Date('August 11, 2025');
+        // Date is an object
+        console.log(typeof(myDate));//object
+        console.log(myDate instanceof Date);//true
+
+        const names = ['jo', 'tian'];//array literal syntax
+        console.log(typeof names);//object
+        console.log(names instanceof Array);//true
+
+        const span = document.createElement('span');
+        console.log(span instanceof HTMLSpanElement);//true
+        console.log(span instanceof Node);//true
+
+        function Pizza() {
+            console.log('making a pizza');
+        }
+
+        const pepperoniPizza = new Pizza();// when using new keyword on a function, it creates an new instance object of that function
+        console.log(pepperoniPizza);// returns a Pizza object, Pizza {}
+        console.log(pepperoniPizza instanceof Pizza);//true
+        console.log(typeof pepperoniPizza);//object
+        console.log(pepperoniPizza.constructor);//returns to what functions has made this instance
+
+        // when using new keyword -> it creates a new object that is the instance of whatever function you have made from
+        /* 
+        the "new" keyword is used to create a new instance of an object constructor function. 
+        It allows you to create a new object based on a template (constructor function) that defines its properties and methods. 
+        
+        When you use the "new" keyword, JavaScript creates a new object, sets the constructor function as the prototype of the new object, 
+        and returns the new object. The new object can then be used to call the methods and access the properties defined in the constructor function. 
+        
+        Essentially, the "new" keyword is used to create an instance of a class, which is a blueprint for creating objects with specific characteristics and behavior.
+        */
+
+
+        /* this keyword in JS refers to the instance of an object, that the function is bound*/
+        const button1 = document.querySelector('.one');
+        const button2 = document.querySelector('.two');
+        function tellmeAboutTheButton() {
+            // this keyword is always scoped to a function
+            console.log(this);
+            setTimeout(() => {
+                console.log(this);
+                this.textContent = `you clicked me`;
+            }, 1000);
+        }
+        button1.addEventListener('click', tellmeAboutTheButton);//tellmeAboutTheButton function is bound to the button1, so this keyword equals to whatever the it gets bound to, which is the button1
+        button2.addEventListener('click', tellmeAboutTheButton);
+
+        // this refers to the instance of the things that was made
+        
+        console.log(`---------------------this keyword examples--------------`)
+        
+        function Pizza2(toppings = [], customer) {
+            // the function that makes an obj is called constructor
+            this.toppings = toppings; // save the toppings were passed in, to this instance of pizza
+            this.customer = customer;
+            this.id = Math.floor(Math.random() * 16777215).toString(16);// generate a random id to the customer 
+            this.slices = 10;
+        }
+        // use prototype to make methods to the obj constructor
+        Pizza2.prototype.cookingPizza = function() {
+            // debugger;
+            console.log(`${this.customer}'s pizza is cooking`);
+        }
+        Pizza2.prototype.eat = function() {
+            if(this.slices > 0) {
+                this.slices = this.slices - 1;
+                console.log(`CHOMP you now have ${this.slices} slices of pizza`);
+                
+            } else {
+                console.log(`sorry no slices left`);
+            }
+            return this.slices;
+        }
+        // pepperoniPizza2 and canadianPizza are both instance sof Pizza2
+        // using this.xx is to attch properties ont that instance 
+        const pepperoniPizza2 = new Pizza2(['pepperoni'], 'Wes');//when using the new keyword of function will return an instance of the object
+        const canadianPizza2 = new Pizza2(['pepperoni', 'mushroom', 'onion'], 'kou');
+        pepperoniPizza2.cookingPizza();
+        pepperoniPizza2.eat();
+        pepperoniPizza2.eat();
+        // console.log(pepperoniPizza2)
+        // console.log(canadianPizza2)
+
+    </script>
+</body>
+</html>
