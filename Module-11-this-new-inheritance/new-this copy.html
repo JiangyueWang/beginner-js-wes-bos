@@ -72,12 +72,14 @@
         
         function Pizza2(toppings = [], customer) {
             // the function that makes an obj is called constructor
+
+            // this are properties
             this.toppings = toppings; // save the toppings were passed in, to this instance of pizza
             this.customer = customer;
             this.id = Math.floor(Math.random() * 16777215).toString(16);// generate a random id to the customer 
             this.slices = 10;
         }
-        // use prototype to make methods to the obj constructor
+        // use prototype to make methods to the allows instance to share functionalities 
         Pizza2.prototype.cookingPizza = function() {
             // debugger;
             console.log(`${this.customer}'s pizza is cooking`);
@@ -88,7 +90,7 @@
                 console.log(`CHOMP you now have ${this.slices} slices of pizza`);
                 
             } else {
-                console.log(`sorry no slices left`);
+                console.log(`sorry no slices left`);  
             }
             return this.slices;
         }
