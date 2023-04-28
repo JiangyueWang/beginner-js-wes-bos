@@ -12,6 +12,8 @@ function Slider(slider) {
     this.slider = slider;
 
     this.slides = slider.querySelector('.slides');
+
+    // prevBtn and nexBtn are not needed anywhere else outside the constructor so dont need to attach this keyword to it
     const prevBtn = slider.querySelector('.goToPrev');
     const nextBtn = slider.querySelector('.goToNext');
     
