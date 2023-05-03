@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Hey</p>
+    <button>click me</button>
+    <div class="wrapper">
+        <p>inside the wrapper</p>
+    </div>
+    <script>
+        // bind, call and apply will change the scope of 'this' keyword is equaled to inside of a function
+        const person = {
+            name: 'Jun',
+            sayHi: function() {
+                console.log(this); // this keyword is always defined by where the function is being called
+                console.log(`Hi ${this.name}`);
+            },
+        }
+        const jenna = { name: 'Jenna' }
+        //const sayHi = person.sayHi; // this equals to the window as there is nothing the method was bound to
+
+        //create a function called 'sayHi' that when it called this keyword will be euqal to whatever you pass in the bind()
+        
+        const sayHi = person.sayHi.bind(person); 
+        //bind is a method that lives on all functions
+        person.sayHi.bind(jenna)();
+
+        //QS example
+        // by calling bind against querySelector, we say when the $ function, use `document` as "this" value
+        const $ = document.querySelector.bind(document); 
+        console.log($('p'))
+        // const wrapper = document.querySelector('.wrapper'); 
+        
+
+        const bill = {
+            total:1000,
+            calculate: function(taxRate) { 
+                return this.total + (this.total*taxRate)
+            }
+        }
+        const total = bill.calculate(0.134);
+        const calOwnBill = bill.calculate.bind({total:500})
+
+    </script>
+</body>
+</html>
