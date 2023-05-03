@@ -44,7 +44,14 @@
             }
         }
         const total = bill.calculate(0.134);
-        const calOwnBill = bill.calculate.bind({total:500})
+        const calOwnBill = bill.calculate.bind({total:500});
+
+        //pass arguments to bind method, the first argument will always be what this keyword equals to
+        const calBillOne = bill.calculate.bind({total:500},0.05); 
+        console.log(calBillOne());
+        // difference between bind and call method is that call runs the function for you
+        const calBillTwo = bill.calculate.call({total:500},0.05);  
+        console.log(calBillTwo)
 
     </script>
 </body>
