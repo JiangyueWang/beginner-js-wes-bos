@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        .go {
+          margin: 5rem;
+          background: pink;
+          padding: 5rem;
+          width: 15rem;
+          height: 15rem;
+          transition: all 0.2s;
+        }
+    
+        .go.circle {
+          border-radius: 50%;
+        }
+    
+        .go.red {
+          background: red;
+        }
+    
+        .go.purple {
+          background: purple;
+          color: pink;
+        }
+    
+        .go.fadeOut {
+          opacity: 0;
+        }
+      </style>
+    <button class="click-btn">
+        click me
+    </button>
+
+    <div class="go">Click Me To Change
+    </div>
+    <script> 
+    
+    // js is single threaded language, this means that only one thing can only be run at one time
+   //callstack only runs one thing at a time
+    function callbaceQueue(){
+    console.log(`starting`); //prints first
+    setTimeout(function(){
+        console.log(`running`);//addr to the callback queue
+    })
+    console.log(`ending`);//prints 2nd
+   }
+   //callbaceQueue()
+
+   function clickBtn(){
+    const btn = document.querySelector('.click-btn');
+    console.log(`hello`);
+    btn.addEventListener('click', function(){
+        setTimeout(function(){
+            console.log(`you clicked me`);
+        }, 2000)
+    })
+    setTimeout(function(){
+            console.log(`click the the button`);
+        }, 5000);
+    console.log(`welcome`)
+   }
+   //clickBtn()
+   const goBtn = document.querySelector('.go');
+   goBtn.addEventListener('click',(e) =>go(e))
+   function go(e) {
+      const el = e.currentTarget;
+      // 1. Change the text to GO when clicked.
+      el.textContent = 'GO';
+      setTimeout(function () {
+        // 2. Make it a circle after 2 seconds
+        el.classList.add('circle');
+        setTimeout(function () {
+          // 3. Make it red after 0.5s
+          el.classList.add('red');
+          setTimeout(function () {
+            // 4. make it square after 0.25s
+            el.classList.remove('circle');
+            setTimeout(function () {
+              // 5. make it purple
+              el.classList.remove('red');
+              el.classList.add('purple');
+              setTimeout(function () {
+                // 6. fade out after 0.5s
+                el.classList.add('invisible');
+                setTimeout(function () {
+                  console.log('You have reacted the 7th layer of callback hell');
+                  el.classList.remove('invisible', 'purple');
+                }, 500);
+              }, 500);
+            }, 500);
+          }, 500)
+        }, 500)
+      }, 500)
+    }
+
+   </script>
+</body>
+</html>
